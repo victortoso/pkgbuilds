@@ -1,0 +1,31 @@
+# $Id$
+# Maintainer: Victor Toso <me@victortoso.com>
+
+pkgname=spice-protocol-git
+pkgver=0.12.13.r9.ge2176ef
+pkgrel=1
+pkgdesc="Headers for SPICE protocol"
+arch=(any)
+url="http://spice-space.org"
+license=('BSD' 'LGPL2.1')
+source=("${pkgname}::git+https://anongit.freedesktop.org/git/spice/spice-protocol.git")
+md5sums=('SKIP')
+provides=("spice-protocol=${pkgver}")
+conflicts=('spice-protocol')
+
+pkgver() {
+  cd "${pkgname}"
+  git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+  cd "$srcdir/$pkgname"
+  ./autogen.sh --prefix=/usr
+  make
+}
+
+package() {
+  cd "$srcdir/$pkgname"
+  make DESTDIR="$pkgdir/" install
+  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
+}
