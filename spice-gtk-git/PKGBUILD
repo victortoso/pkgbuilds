@@ -1,0 +1,49 @@
+# $Id$
+# Maintainer: Victor Toso <me@victortoso.com>
+
+pkgname=spice-gtk-git
+pkgver=0.34.r23.g0381e62
+pkgrel=1
+pkgdesc="Glib and Gtk libraries for Spice remote desktop clients"
+arch=('i686' 'x86_64')
+url="https://www.spice-space.org"
+license=('LGPL2.1')
+depends=('gtk3' 'celt0.5.1' 'dbus-glib' 'usbredir' 'libsoup' 'phodav' 'lz4')
+makedepends=('spice-protocol-git' 'gobject-introspection' 'intltool' 'vala'
+             'python2-pyparsing' 'usbutils' 'python2-six')
+options=('!emptydirs')
+source=("${pkgname}::git+https://anongit.freedesktop.org/git/spice/spice-gtk.git"
+        "git+https://anongit.freedesktop.org/git/spice/spice-common.git")
+md5sums=('SKIP' 'SKIP')
+provides=("spice-gtk3=${pkgver}" "spice-glib=${pkgver}")
+conflicts=('spice-gtk3' 'spice-glib')
+
+pkgver() {
+  cd "${pkgname}"
+  git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+  cd "$srcdir/$pkgname"
+  PYTHON=python2 ./autogen.sh \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --with-gtk=3.0 \
+    --with-coroutine=ucontext \
+    --enable-vala \
+    --enable-gstaudio \
+    --enable-gstvideo \
+    --enable-webdav \
+    --enable-usbredir \
+    --enable-lz4 \
+    --disable-pulse \
+    --disable-static \
+    --disable-smartcard
+  #sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+  make
+}
+
+package() {
+  cd "$srcdir/$pkgname"
+  make DESTDIR="$pkgdir/" install
+}
