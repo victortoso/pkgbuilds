@@ -1,0 +1,40 @@
+# $Id$
+# Maintainer: Victor Toso <me@victortoso.com>
+
+pkgname=spice-server-git
+pkgver=0.14.0.r58.gfb3e061a
+pkgrel=1
+pkgdesc="Spice server library"
+arch=('i686' 'x86_64')
+url="https://www.spice-space.org"
+license=('LGPL2.1')
+depends=('celt0.5.1' 'libjpeg-turbo' 'glib2' 'lz4' 'pixman')
+makedepends=('spice-protocol-git' 'gobject-introspection' 'intltool'
+             'python2-pyparsing' 'python2-six')
+options=('!emptydirs')
+source=("${pkgname}::git+https://anongit.freedesktop.org/git/spice/spice.git"
+        "git+https://anongit.freedesktop.org/git/spice/spice-common.git")
+md5sums=('SKIP' 'SKIP')
+provides=("spice=${pkgver}")
+conflicts=('spice')
+
+pkgver() {
+  cd "${pkgname}"
+  git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+  cd "$srcdir/$pkgname"
+  PYTHON=python2 ./autogen.sh \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --enable-lz4 \
+    --enable-gstreamer=1.0 \
+    --disable-smartcard
+  make
+}
+
+package() {
+  cd "$srcdir/$pkgname"
+  make DESTDIR="$pkgdir/" install
+}
