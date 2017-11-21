@@ -2,7 +2,7 @@
 # Maintainer: Victor Toso <me@victortoso.com>
 
 pkgname=spice-gtk-git
-pkgver=0.34.r23.g0381e62
+pkgver=0.34.r23.0381e62
 pkgrel=1
 pkgdesc="Glib and Gtk libraries for Spice remote desktop clients"
 arch=('i686' 'x86_64')
@@ -20,7 +20,7 @@ conflicts=('spice-gtk3' 'spice-glib')
 
 pkgver() {
   cd "${pkgname}"
-  git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+  git describe --long | sed 's/^v//;s/\([^-]*-\)g/r\1/;s/-/./g'
 }
 
 build() {

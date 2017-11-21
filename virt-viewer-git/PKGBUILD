@@ -2,7 +2,7 @@
 # Maintainer: Victor Toso <me@victortoso.com>
 
 pkgname=virt-viewer-git
-pkgver=6.0.r14.g1b89efa
+pkgver=6.0.r14.1b89efa
 pkgrel=1
 pkgdesc="A lightweight interface for interacting with the graphical display of virtualized guest OS."
 depends=('gtk-vnc' 'libvirt' 'spice-gtk-git' 'desktop-file-utils' 'libvirt-glib')
@@ -16,7 +16,7 @@ conflicts=('virt-viewer')
 
 pkgver() {
   cd "${pkgname}"
-  git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+  git describe --long | sed 's/^v//;s/\([^-]*-\)g/r\1/;s/-/./g'
 }
 
 build() {

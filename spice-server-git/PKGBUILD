@@ -2,7 +2,7 @@
 # Maintainer: Victor Toso <me@victortoso.com>
 
 pkgname=spice-server-git
-pkgver=0.14.0.r61.gd57b61a5
+pkgver=0.14.0.r61.d57b61a5
 pkgrel=1
 pkgdesc="Spice server library"
 arch=('i686' 'x86_64')
@@ -20,7 +20,7 @@ conflicts=('spice')
 
 pkgver() {
   cd "${pkgname}"
-  git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+  git describe --long | sed 's/^v//;s/\([^-]*-\)g/r\1/;s/-/./g'
 }
 
 build() {
