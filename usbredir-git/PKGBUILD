@@ -1,0 +1,34 @@
+# $Id$
+# Maintainer: Victor Toso <me@victortoso.com>
+
+pkgname=usbredir-git
+pkgver=usbredir.0.7.1.r15.b7ee416
+pkgrel=1
+pkgdesc="USB traffic redirection protocol"
+arch=('i686' 'x86_64')
+url="https://www.spice-space.org/page/UsbRedir"
+license=('GPL2' 'LGPL2.1')
+depends=('libusb')
+options=('!emptydirs')
+source=("${pkgname}::git+https://anongit.freedesktop.org/git/spice/usbredir.git")
+md5sums=('SKIP')
+provides=('usbredir')
+conflicts=('usbredir')
+
+pkgver() {
+  cd "${pkgname}"
+  git describe --long | sed 's/^v//;s/\([^-]*-\)g/r\1/;s/-/./g'
+}
+
+build() {
+  cd "$srcdir/$pkgname"
+  ./autogen.sh \
+    --prefix=/usr \
+    --sbindir=/usr/bin
+  make
+}
+
+package() {
+  cd "$srcdir/$pkgname"
+  make DESTDIR="$pkgdir/" install
+}
