@@ -2,7 +2,7 @@
 # Maintainer: Victor Toso <me@victortoso.com>
 
 pkgname=spice-server-git
-pkgver=0.14.0.r58.gfb3e061a
+pkgver=0.14.0.r61.gd57b61a5
 pkgrel=1
 pkgdesc="Spice server library"
 arch=('i686' 'x86_64')

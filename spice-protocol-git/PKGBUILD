@@ -2,7 +2,7 @@
 # Maintainer: Victor Toso <me@victortoso.com>
 
 pkgname=spice-protocol-git
-pkgver=0.12.13.r9.ge2176ef
+pkgver=0.12.13.r10.g6371ecb
 pkgrel=1
 pkgdesc="Headers for SPICE protocol"
 arch=(any)
