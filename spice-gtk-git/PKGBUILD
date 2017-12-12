@@ -31,14 +31,14 @@ build() {
     --with-gtk=3.0 \
     --with-coroutine=ucontext \
     --enable-vala \
+    --enable-smartcard \
     --enable-gstaudio \
     --enable-gstvideo \
     --enable-webdav \
     --enable-usbredir \
     --enable-lz4 \
     --disable-pulse \
-    --disable-static \
-    --disable-smartcard
+    --disable-static
   #sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
   make
 }

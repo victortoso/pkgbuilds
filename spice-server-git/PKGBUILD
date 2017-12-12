@@ -30,7 +30,7 @@ build() {
     --sbindir=/usr/bin \
     --enable-lz4 \
     --enable-gstreamer=1.0 \
-    --disable-smartcard
+    --enable-smartcard
   make
 }
 
