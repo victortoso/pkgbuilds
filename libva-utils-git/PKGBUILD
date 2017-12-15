@@ -1,0 +1,36 @@
+# Maintainer: Bruno Pagani (a.k.a. ArchangeGabriel) <archange@archlinux.org>
+# Contributor: Sean V Kelley <seanvk@posteo.de>
+
+pkgname=libva-utils-git
+pkgver=2.0.0.r7.5975415
+pkgrel=1
+pkgdesc="Intel VA-API Media Applications and Scripts for libva"
+arch=('x86_64')
+url="https://github.com/01org/libva-utils"
+license=('custom')
+depends=('libva-git')
+makedepends=('mesa')
+source=("${pkgname}::git+https://github.com/01org/libva-utils.git")
+provides=("libva-utils=${pkgver}")
+conflicts=('libva-utils')
+md5sums=('SKIP')
+
+pkgver() {
+  cd "${pkgname}"
+  git describe --long | sed 's/^v.//;s/\([^-]*-\)g/r\1/;s/-/./g'
+}
+
+build() {
+    cd "${pkgname}"
+    ./autogen.sh \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --localstatedir=/var
+    make
+}
+
+package() {
+    cd "${pkgname}"
+    make DESTDIR="$pkgdir" install
+    install -Dm644 COPYING "$pkgdir"/usr/share/licenses/${pkgname}/COPYING
+}
