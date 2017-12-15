@@ -12,8 +12,8 @@ depends=('glibc' 'libdrm' 'libgl' 'libx11' 'libxext' 'libxfixes' 'wayland')
 makedepends=('mesa')
 optdepends=('libva-vdpau-driver: backend for Nvidia and AMD cards'
             'libva-intel-driver: backend for Intel cards')
-provides=('libva=${pkgver}' 'libva-drm.so' 'libva-glx.so'
-          'libva-wayland.so' 'libva-x11.so' 'libva.so')
+provides=("libva=${pkgver}" "libva-drm.so" "libva-glx.so"
+          "libva-wayland.so" "libva-x11.so" "libva.so")
 source=("${pkgname}::git+https://github.com/01org/libva.git")
 conflicts=('libva')
 md5sums=('SKIP')
